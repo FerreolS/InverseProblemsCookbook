@@ -2,6 +2,10 @@ sudo: required
 language: generic
 services: docker
 
+before_script:
+- git config --global user.email "ferreol.soulez@univ-lyon1.fr"
+- git config --global user.name "ferreolS"
+
 script:
   # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
   # Compiling only main.tex:
