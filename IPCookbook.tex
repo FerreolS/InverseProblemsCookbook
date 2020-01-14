@@ -45,8 +45,8 @@
     \begin{block}{Basic properties}
     {\tablinesep=1.2ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-        $\left(\M{H}\,\V{x}\right)_m = \sum^{N-1}_{n=0} H_{m,n}\,x_n$ &  vector matrix product\\
-        $\left(\M{H}\,\M{G}\right)_{m,k} = \sum^{N-1}_{n=0} H_{m,n}\,G_{n,k}$ &  matrix product\\
+        $\left(\M{H}\,\V{x}\right)_m = \sum_n H_{m,n}\,x_n$ &  vector matrix product\\
+        $\left(\M{H}\,\M{G}\right)_{m,k} = \sum_{n} H_{m,n}\,G_{n,k}$ &  matrix product\\
         $\M{H}\left(\alpha\,\V{x}+\beta\,\V{y}\right) = \alpha\,\M{H}\,\V{x}+\beta\,\M{H}\,\V{y}$ & linearity\\ 
         $\left({\V{x}}\times {\V{y}}\right)_n = x_n\,y_n$ & element wise product \\
         $\M{I}  =    
@@ -65,8 +65,7 @@ a_0&0&0&\dots &0\\
 0&a_1&0&\dots &0\\
 0&0&a_2&\dots &0\\
 \vdots &\vdots &\vdots &\ddots &\vdots \\
-0&0&0&\dots &a_{N-1}\end{bmatrix}, \ \V{a}= \begin{bmatrix} a_0\\ a_1\\ a_2\\ \vdots \\ a_{N-1}
-\end{bmatrix}$ & diagonal matrix
+0&0&0&\dots &a_{N-1}\end{bmatrix}$ & diagonal matrix % $\V{a}= \begin{bmatrix} a_0\\ a_1\\ a_2\\ \vdots \\ a_{N-1} \end{bmatrix}$ 
     \end{tabular*}}
     \end{block}
     
@@ -74,7 +73,7 @@ a_0&0&0&\dots &0\\
     \begin{block}{Adjoint, scalar product}
     {\tablinesep=1.2ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-        $H\T_{i,j} = H^*_{j,i} $ &  adjoint (transpose conjugate)\\
+        $\left(H\T\right)_{i,j} = H^*_{j,i} $ &  adjoint (transpose conjugate)\\
         $\Inner{\V{x}}{\V{y}} = \sum_{n=0}^{N-1} x_n^*\,y_n = \V{x}\T \V{y}$ &  dot (or scalar or inner) product\\
          $\Inner{\M{H}\,\V{x}}{\V{y}} = \Inner{\V{x}}{\M{H}\T\,\V{y}}$ & adjoint formal definition\\
          $\left(\alpha\,\M{H} + \beta\,\M{G}\right)\T = \alpha^*\,\M{H}\T + \beta^*\,\M{G}\T$&\\
@@ -90,7 +89,7 @@ a_0&0&0&\dots &0\\
     {\tablinesep=1.2ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
         $ \Abs{ \Inner{\V{x}}{\V{y}}} \leq   \Norm{\V{x}}_2 \, \Norm{\V{y}}_2 $ & (Cauchy-Schwartz)   \\
-        $\Norm{\V{x} + \V{y} }_2 = \Norm{\V{x}}_2 +  \Norm{\V{y}}_2 + 2\, \Inner{\V{x}}{\V{y}} $ & \\
+        $\Norm{\V{x} + \V{y} }^2_2 = \Norm{\V{x}}^2_2 +  \Norm{\V{y}}^2_2 + 2\, \Inner{\V{x}}{\V{y}} $ & \\
         $  \Norm{\V{x}}_p^p  =\sum_{n=0}^{N-1} \Abs{x_n}^p\ , \,p\geq 1 $ & $\ell^p$ norm\\
         $ \Norm{\V{x} + \V{y} }_p \leq \Norm{\V{x}}_p +  \Norm{\V{y}}_p$  & triangular inequality\\
         $\Norm{\M{H}}^2_F = \sum_{n,m} \Abs{H_{i,j}}^2 = \tr(\M{H}\T\M{H}) $& Frobenius norm  
@@ -105,8 +104,8 @@ a_0&0&0&\dots &0\\
     $\M{G} =  \M{H}^{-1}$ is unique and is the inverse of $\M{H}$\\
     {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-         $\left(\M{H}\,\M{G}\right)^{-1} = \M{G}^{-1}\,\M{H}^{-1}$&  \\
-         $\left(\M{H}\T\right)^{-1} = \left(\M{G}^{-1}\right)\T$&  
+         $\left(\M{H}\,\M{M}\right)^{-1} = \M{M}^{-1}\,\M{H}^{-1}$& for any $\M{H}\,,\M{M}$ invertible\\
+         $\left(\M{H}\T\right)^{-1} = \left(\M{H}^{-1}\right)\T$&  
         \end{tabular*}}
     \end{block}
  
@@ -119,7 +118,7 @@ a_0&0&0&\dots &0\\
 
     
     \begin{block}{Eigenvalue \& eigenvectors of  $\M{H} \in \Complexes^{N\times N}$}
-    $\lambda_i$ and $\V{v}_i\in \Complexes^{N}$ are the $i^\text{th}$ eigenvalue and eigenvector  respectively. They satisfy:
+    $\lambda_i\in \Complexes$ and $\V{v}_i\in \Complexes^{N}$ are the $i^\text{th}$ eigenvalue and eigenvector  respectively. They satisfy:
     \begin{align*}
         \M{H}\,\V{v}_i = \lambda_i\,\V{v}_i
     \end{align*}
@@ -132,16 +131,16 @@ a_0&0&0&\dots &0\\
         \item $\V{\lambda} = \eig(\M{H})$ is the spectrum of $\M{H}$,
         \item $C = \frac{\max\Abs{\V{\lambda}}}{\min\Abs{\V{\lambda}}}$ is the condition number,
         \item $\rank(\M{H})$ is the  number of non-zero element of  $\V{\lambda}$,
-        \item if $\M{H} $ is invertible  $\M{H}^{-1} = \M{Q}\,\diag(\V{\lambda})^{-1}\,\M{Q}^{-1}\,$,
+        \item if $\lambda_i\neq 0,\,\forall i$,  $\M{H} $ is invertible  and  $\M{H}^{-1} = \M{Q}\,\diag(\V{\lambda})^{-1}\,\M{Q}^{-1}\,$,
     \end{itemize}
     \end{block}
     
 
     \begin{block}{Peculiar matrices}
     \begin{itemize}
-        \item {\bf Unitary:} $\M{H}\T\, \M{H} = \M{H}\, \M{H}\T = \M{I}$
-        \item {\bf Hermitian:} $\M{H}\T= \M{H}$ (symmetric) and  $\M{H} = \M{Q}\,\diag(\V{\lambda})\,\M{Q}\T\,,$ 
-        \item {\bf Positive semi-definite:} $ \lambda_i\geq 0\,,\ \forall i \iff \V{x}\T\M{H}\V{x} \geq 0$ 
+        \item {\bf Unitary:} $\M{Q}\T\, \M{Q} = \M{Q}\, \M{Q}\T = \M{I}$
+        \item {\bf Hermitian:} $\M{H}\T= \M{H}$ and  $\M{H} = \M{Q}\,\diag(\V{\lambda})\,\M{Q}\T$ with $\V{\lambda}\in\Reals^N$ and $\M{Q}$ unitary
+        \item {\bf Positive semi-definite:} $ \lambda_i\geq 0\,,\ \forall i \iff \V{x}\T\M{H}\V{x} \geq 0, \, \forall \V{x}$ 
         \item {\bf Toeplitz:} $H_{i,j} = h_{i-j}$,
         \item {\bf Circulant:} Toeplitz with  $H_{i,j}= h_{(i-j) \mod N}$
     \end{itemize}
@@ -149,7 +148,7 @@ a_0&0&0&\dots &0\\
     
     \begin{block}{Trace and determinant} 
     \begin{itemize}
-        \item {\bf  trace:}   $\ \tr(\M{H}) = \sum^N_n H_{n,n} = \sum^N_n \lambda_n $
+        \item {\bf  trace:}   $\ \tr(\M{H}) = \sum_n H_{n,n} = \sum_n \lambda_n $
     \end{itemize}
          {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
@@ -157,7 +156,7 @@ a_0&0&0&\dots &0\\
          $\tr(\alpha\,\M{H}+\beta\,\M{G}) =\alpha\,\tr(\M{H})+\alpha\,\tr(\M{H})$& \\
           \end{tabular*}}
     \begin{itemize}
-        \item {\bf  determinant:}  $\ \det(\M{H}) =  \sum^N_n \lambda_n  $
+        \item {\bf  determinant:}  $\ \det(\M{H}) =  \prod_n \lambda_n  $
     \end{itemize}
     {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
