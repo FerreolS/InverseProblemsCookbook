@@ -54,12 +54,13 @@
 \RequirePackage[size = a0, scale = 1.5]{beamerposter}
 \RequirePackage{etoolbox}
 \RequirePackage{pgfpages}
-\RequirePackage[utf8]{inputenx}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{calc}
 \RequirePackage[final]{microtype}
 \RequirePackage{lmodern}
 \RequirePackage[scaled]{beramono}
+
+%\RequirePackage[utf8]{inputenx}
 
 
 \hypersetup{colorlinks,
