@@ -1,0 +1,139 @@
+
+
+\usepackage{amsmath,amsfonts,amssymb,textcomp,mathtools}
+\usepackage{mathrsfs}
+\usepackage{xspace} 
+
+
+\makeatletter \newcommand{\MathFuncName}[1]{{\operator@font #1}}
+\newcommand{\MathFunc}[1]{\mathop{\operator@font #1}\nolimits}
+\newcommand{\MathFuncWithLimits}[1]{\mathop{\operator@font #1}\limits}
+\makeatother
+
+\newcommand{\asterisk}{*}
+\newcommand{\mathd}{\mathrm{d}} % roman 'd' for integrand/differential
+\newcommand{\mathe}{\mathrm{e}} % roman 'e' for exp(1)
+\newcommand{\mathi}{\mathrm{i}} % roman 'i' for sqrt(-1)
+
+\newcommand{\BF}[1]{\mathbf{#1}} % math bold
+\newcommand{\RM}[1]{\mathrm{#1}} % math roman
+\newcommand{\SF}[1]{\mathsf{#1}} % math sans-serif
+\newcommand{\OP}[1]{{\MathFuncName{#1}}} % upright (*) for function names
+\newcommand{\Tag}[1]{\mathsf{#1}} % math font for labels and tags
+\newcommand{\BS}[1]{{\boldsymbol{#1}}} % bold symbol (*)
+\newcommand{\V}[1]{\boldsymbol{#1}} % vector
+\newcommand{\M}[1]{\mathbf{#1}} % matrix
+\newcommand{\Inner}[2]{\left \langle #1,#2 \right\rangle} % Inner product
+% \newcommand{\TransposeLetter}{\mathrm{T}}
+% \newcommand{\TransposeLetter}{\mathsf{t}}
+% \newcommand{\TransposeLetter}{{\intercal}}
+% \newcommand{\TransposeLetter}{\top}
+\newcommand{\AdjointLetter}{\dagger}
+\newcommand{\T}{^{\AdjointLetter}} % suffix for transpose
+\newcommand{\TransposeLetter}{\top}
+\newcommand{\Tt}{^{\TransposeLetter}} % suffix for transpose
+\newcommand{\mT}{^{-\TransposeLetter}} % suffix for inverse transpose
+\newcommand{\I}{\mathi} % roman 'i' for sqrt(-1)
+\newcommand{\E}{\mathe} % roman 'e' for exp(1)
+\newcommand{\D}[1]{{\mathd #1}} % integrand/differential
+\newcommand{\ScaleAs}{\mathcal{O}} % O(n)
+\renewcommand{\Re}{\MathFunc{Re}} % real part
+\newcommand{\sign}{\MathFunc{sign}} % sign
+\newcommand{\Arg}{\MathFunc{Arg}} % argument
+%\newcommand{\mod}{\MathFunc{mod}} % modulo
+\renewcommand{\Im}{\MathFunc{Im}} % imaginary part
+\newcommand{\arc}{\MathFunc{arc}} % lenght of arc
+\newcommand{\rect}{\MathFunc{rect}} % real part
+\newcommand{\rnd}{\MathFunc{rnd}} % random
+\newcommand{\sgn}{\MathFunc{sgn}} % sign function
+\newcommand{\sinc}{\MathFunc{sinc}} % cardinal sine
+\newcommand{\asin}{\MathFunc{asin}} % inverse sine
+\newcommand{\acos}{\MathFunc{acos}} % inverse cosine
+\newcommand{\Var}{\MathFunc{Var}} % variance
+\newcommand{\Cov}{\MathFunc{Cov}} % covariance
+\DeclarePairedDelimiterXPP{\Expect}[1]{\mathrm{E}}(){}{#1}
+\newcommand*{\delimsize}{}
+\newcommand*{\given}{\,\vert\,} % compact version
+\newcommand*{\Given}{\:\delimsize\vert\:} % autoscale to surrounding version
+
+\newcommand{\Card}{\MathFunc{Card}} % cardinal, number of elements
+\newcommand{\diag}{\MathFunc{diag}} % diagonal
+\newcommand{\eig}{\MathFunc{eig}} % eigenvalues
+\newcommand{\tr}{\MathFunc{tr}} % trace
+\newcommand{\rank}{\MathFunc{rank}} % rank
+\newcommand{\pdf}{\MathFunc{pdf}} % probability density function
+\newcommand{\para}{{/\!/}} % parallel
+\newcommand{\prox}{\operatorname{prox}} % proximity operator
+\newcommand{\conj}[1]{\operatorname{conj}\Paren{#1}} % proximity operator
+\newcommand{\proxy}[1]{\widetilde{#1}} % approximation
+% (*) enclosed in braces so that x_\BS{u} or x_\RM{name} works
+\newcommand{\comp}{\mathop{\circ}}
+
+
+
+% Partial derivative:
+\newcommand{\PDer}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\At}[2]{\left.#1\right\vert_{#2}}
+
+\newcommand{\Paren}[1]{\left(#1\right)}
+\newcommand{\bigParen}[1]{\bigl(#1\bigr)}
+\newcommand{\BigParen}[1]{\Bigl(#1\Bigr)}
+
+\newcommand{\Brace}[1]{\left\{#1\right\}}
+\newcommand{\bigBrace}[1]{\bigl\{#1\bigr\}}
+\newcommand{\BigBrace}[1]{\Bigl\{#1\Bigr\}}
+
+\newcommand{\SqBrack}[1]{\left[#1\right]}
+\newcommand{\bigSqBrack}[1]{\bigl[#1\bigr]}
+\newcommand{\BigSqBrack}[1]{\Bigl[#1\Bigr]}
+
+% Norm, e.g. ||x|| (fixed and scalable):
+\newcommand{\norm}[1]{\Vert #1\Vert} 
+\newcommand{\Norm}[1]{\left\Vert #1\right\Vert}
+\newcommand{\bigNorm}[1]{\bigl\Vert #1\bigr\Vert}
+\newcommand{\BigNorm}[1]{\Bigl\Vert #1\Bigr\Vert}
+
+% Absolute value, e.g. |x| (fixed and scalable):
+\newcommand{\abs}[1]{\vert #1\vert} 
+\newcommand{\Abs}[1]{\left\vert #1\right\vert} \newcommand{\bigAbs}[1]{\bigl\vert #1\bigr\vert}
+\newcommand{\BigAbs}[1]{\Bigl\vert #1\Bigr\vert}
+
+% Average value, e.g. <x> (fixed and scalable):
+\newcommand{\avg}[1]{\langle #1\rangle}
+\newcommand{\Avg}[1]{\left\langle #1\right\rangle}
+\newcommand{\bigAvg}[1]{\bigl\langle #1\bigr\rangle}
+\newcommand{\BigAvg}[1]{\Bigl\langle #1\Bigr\rangle}
+
+% Complex quantity:
+\newcommand{\complex}[1]{\underline{#1}}
+
+% For optimization problems, "arg min" and "arg max":
+\newcommand{\argmin}{\MathFuncWithLimits{arg\,min}}
+\newcommand{\argmax}{\MathFuncWithLimits{arg\,max}}
+\newcommand{\minimize}{\MathFuncWithLimits{minimize}}
+\newcommand{\find}{\MathFuncWithLimits{find}}
+
+% Marker for end of proof/algorithm:
+\newcommand{\EndProof}{\ensuremath{\blacksquare}}
+% \newcommand{\EndProof}{\ensuremath{Box{}}} Quadratic term:
+\newcommand{\QuadTerm}[2]{#2\T\!\!\cdot #1\cdot #2}
+
+% Fourier transforms:
+\newcommand{\FT}[1]{\widehat{#1}} % Fourier transform
+\newcommand{\TwoIPi}{2\,\I\,\pi} % 2*i*pi
+\newcommand{\F}[1]{\mathcal{F}\Paren{#1}}
+\newcommand{\IF}[1]{\mathcal{F}^{-1}\Paren{#1}}
+\newcommand{\FTarrow}{\xrightarrow{\mathrm{FT}}}
+\newcommand{\DFTarrow}{\xrightarrow{\mathrm{DFT}}}
+
+% Sets:
+\newcommand{\Set}[1]{\mathbb{#1}} \newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Integers}{\mathbb{Z}} \newcommand{\Natural}{\mathbb{N}}
+\newcommand{\Complexes}{\mathbb{C}}
+\newcommand{\Rationals}{\mathbb{Q}}
+
+% By definition: \newcommand\bydef{\equiv}
+% \newcommand\bydef{\triangleq}
+\newcommand{\bydef}{\stackrel{\text{\tiny def}}{=}}
+
+\newcommand\BesselJ[1]{\mathop{\mathrm{J}}\nolimits_{#1}}

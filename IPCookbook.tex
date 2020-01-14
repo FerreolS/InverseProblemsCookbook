@@ -1,0 +1,402 @@
+
+\documentclass[a4paper]{cookbook}
+\input{preamble.tex}
+\usepackage{lipsum}                                % Dummy text
+\usepackage[figwidth = 0.98\linewidth]{todonotes}  % Dummy image (and more!)
+\usepackage[absolute, overlay]{textpos}            % Figure placement
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+
+\usepackage{tabls}
+
+\title{Selected recipes for inverse problems}
+\author
+{%
+    Ferréol Soulez
+}
+%\institute{Centre de Recherche Astrophysique de Lyon}
+
+
+%% Remove footline:
+%\setbeamertemplate{footline}{}
+
+
+\begin{document}
+\begin{frame}
+
+\vspace{-1.5em}    
+\begin{columns}[onlytextwidth]
+
+
+\begin{column}{0.5\textwidth - .5cm}
+    \begin{exampleblock}{Notations}
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+            $\alpha$ &  (lower case) scalar \\
+            $\alpha^*$ & complex conjugate of $\alpha$\\
+            $\V{x} \in \Complexes^N$ &  (boldface lower case) complex \\
+            $N$ &   (upper case) cardinal (number of elements)\\
+            $\M{H} \in \Complexes^{N\times M}$ & (boldface upper case) linear operator (matrix) \\%  $\Complexes^N \to \Complexes^M$\\
+            $f: \Complexes^N \to \Complexes^M $ & (lower case) function  \\
+            $ L^{2}(\Reals^N)$ & space of squared-integrable function \\
+            $\mathcal{H}:  L^{2}(\Reals^N) \to L^{2}(\Reals^M)$ & (calligraphic upper case)  operator \\ & acting on functions
+    \end{tabular*}
+    \end{exampleblock}
+    
+    \begin{block}{Basic properties}
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $\left(\M{H}\,\V{x}\right)_m = \sum^{N-1}_{n=0} H_{m,n}\,x_n$ &  vector matrix product\\
+        $\left(\M{H}\,\M{G}\right)_{m,k} = \sum^{N-1}_{n=0} H_{m,n}\,G_{n,k}$ &  matrix product\\
+        $\M{H}\left(\alpha\,\V{x}+\beta\,\V{y}\right) = \alpha\,\M{H}\,\V{x}+\beta\,\M{H}\,\V{y}$ & linearity\\ 
+        $\left({\V{x}}\times {\V{y}}\right)_n = x_n\,y_n$ & element wise product \\
+        $\M{I}  =    
+\begin{bmatrix}
+1\ & 0\ & 0\ &\dots &0\\
+0&1&0&\dots &0\\
+0&0&1&\dots &0\\
+\vdots &\vdots &\vdots &\ddots &\vdots \\
+0&0&0&\dots &1\end{bmatrix}$ & identity matrix\\
+    \end{tabular*}}
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $\M{A} = \diag(\V{a}) =    
+\begin{bmatrix}
+a_0&0&0&\dots &0\\
+0&a_1&0&\dots &0\\
+0&0&a_2&\dots &0\\
+\vdots &\vdots &\vdots &\ddots &\vdots \\
+0&0&0&\dots &a_{N-1}\end{bmatrix}, \ \V{a}= \begin{bmatrix} a_0\\ a_1\\ a_2\\ \vdots \\ a_{N-1}
+\end{bmatrix}$ & diagonal matrix
+    \end{tabular*}}
+    \end{block}
+    
+    
+    \begin{block}{Adjoint, scalar product}
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $H\T_{i,j} = H^*_{j,i} $ &  adjoint (transpose conjugate)\\
+        $\Inner{\V{x}}{\V{y}} = \sum_{n=0}^{N-1} x_n^*\,y_n = \V{x}\T \V{y}$ &  dot (or scalar or inner) product\\
+         $\Inner{\M{H}\,\V{x}}{\V{y}} = \Inner{\V{x}}{\M{H}\T\,\V{y}}$ & adjoint formal definition\\
+         $\left(\alpha\,\M{H} + \beta\,\M{G}\right)\T = \alpha^*\,\M{H}\T + \beta^*\,\M{G}\T$&\\
+         $\left(\M{H}\,\M{G}\right)\T = \M{G}\T\,\M{H}\T$&
+    \end{tabular*}}
+    \end{block}
+    
+    \begin{block}{Norms}
+    {\tablinesep=1.5ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $  \Norm{\V{x}}_2^2  =  \Inner{\V{x}}{\V{x}} = \V{x}\T\V{x} = \sum_{n=0}^{N-1} \Abs{x_n}^2 = \sum_{n=0}^{N-1} x_n^*\,x_n$ & $\ell^2$ norm
+    \end{tabular*}}
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $ \Abs{ \Inner{\V{x}}{\V{y}}} \leq   \Norm{\V{x}}_2 \, \Norm{\V{y}}_2 $ & (Cauchy-Schwartz)   \\
+        $\Norm{\V{x} + \V{y} }_2 = \Norm{\V{x}}_2 +  \Norm{\V{y}}_2 + 2\, \Inner{\V{x}}{\V{y}} $ & \\
+        $  \Norm{\V{x}}_p^p  =\sum_{n=0}^{N-1} \Abs{x_n}^p\ , \,p\geq 1 $ & $\ell^p$ norm\\
+        $ \Norm{\V{x} + \V{y} }_p \leq \Norm{\V{x}}_p +  \Norm{\V{y}}_p$  & triangular inequality\\
+        $\Norm{\M{H}}^2_F = \sum_{n,m} \Abs{H_{i,j}}^2 = \tr(\M{H}\T\M{H}) $& Frobenius norm  
+        \end{tabular*}}
+    \end{block}
+ 
+    \begin{block}{Inverse}
+    $\M{H}\in \Complexes^{N\times N}$ is called invertible (also nonsingular or nondegenerate) if there exists a matrix $\M{G}$ such that:
+    \begin{align*}
+        \M{H} \M{G} = \M{G} \M{H} =  \M{I}
+    \end{align*}
+    $\M{G} =  \M{H}^{-1}$ is unique and is the inverse of $\M{H}$\\
+    {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+         $\left(\M{H}\,\M{G}\right)^{-1} = \M{G}^{-1}\,\M{H}^{-1}$&  \\
+         $\left(\M{H}\T\right)^{-1} = \left(\M{G}^{-1}\right)\T$&  
+        \end{tabular*}}
+    \end{block}
+ 
+
+
+\end{column}
+
+
+\begin{column}{0.5\textwidth - .5cm}
+
+    
+    \begin{block}{Eigenvalue \& eigenvectors of  $\M{H} \in \Complexes^{N\times N}$}
+    $\lambda_i$ and $\V{v}_i\in \Complexes^{N}$ are the $i^\text{th}$ eigenvalue and eigenvector  respectively. They satisfy:
+    \begin{align*}
+        \M{H}\,\V{v}_i = \lambda_i\,\V{v}_i
+    \end{align*}
+    It leads to the eigendecomposition:
+    \begin{align*}
+         \M{H} = \M{Q}\,\diag(\V{\lambda})\,\M{Q}^{-1}\,,
+    \end{align*}
+    where the columns of $\M{V}$ are the $N$ eigenvectors of $\M{H}$.
+    \begin{itemize}
+        \item $\V{\lambda} = \eig(\M{H})$ is the spectrum of $\M{H}$,
+        \item $C = \frac{\max\Abs{\V{\lambda}}}{\min\Abs{\V{\lambda}}}$ is the condition number,
+        \item $\rank(\M{H})$ is the  number of non-zero element of  $\V{\lambda}$,
+        \item if $\M{H} $ is invertible  $\M{H}^{-1} = \M{Q}\,\diag(\V{\lambda})^{-1}\,\M{Q}^{-1}\,$,
+    \end{itemize}
+    \end{block}
+    
+
+    \begin{block}{Peculiar matrices}
+    \begin{itemize}
+        \item {\bf Unitary:} $\M{H}\T\, \M{H} = \M{H}\, \M{H}\T = \M{I}$
+        \item {\bf Hermitian:} $\M{H}\T= \M{H}$ (symmetric) and  $\M{H} = \M{Q}\,\diag(\V{\lambda})\,\M{Q}\T\,,$ 
+        \item {\bf Positive semi-definite:} $ \lambda_i\geq 0\,,\ \forall i \iff \V{x}\T\M{H}\V{x} \geq 0$ 
+        \item {\bf Toeplitz:} $H_{i,j} = h_{i-j}$,
+        \item {\bf Circulant:} Toeplitz with  $H_{i,j}= h_{(i-j) \mod N}$
+    \end{itemize}
+    \end{block}
+    
+    \begin{block}{Trace and determinant} 
+    \begin{itemize}
+        \item {\bf  trace:}   $\ \tr(\M{H}) = \sum^N_n H_{n,n} = \sum^N_n \lambda_n $
+    \end{itemize}
+         {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+         $\tr(\M{H}\T) = \tr(\M{H})^*$&  $\tr(\M{H}\,\M{G}) =\tr(\M{G}\,\M{H})$\\
+         $\tr(\alpha\,\M{H}+\beta\,\M{G}) =\alpha\,\tr(\M{H})+\alpha\,\tr(\M{H})$& \\
+          \end{tabular*}}
+    \begin{itemize}
+        \item {\bf  determinant:}  $\ \det(\M{H}) =  \sum^N_n \lambda_n  $
+    \end{itemize}
+    {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+         $\det(\M{H}) \neq 0 \iff \M{H} $ is invertible &   $\det(\M{H}\T) = \det(\M{H})^*$\\
+         $\det(\M{H}\,\M{G}) =\det(\M{H})\,\det(\M{G})$& $\det(\M{H}^{-1})= 1/ \det(\M{H})$
+        \end{tabular*}}
+    \end{block}
+    
+    
+    \begin{block}{Singular value decomposition}
+    For all matrices $\M{H}\in \Complexes^{N\times M}$ there exists two unitary matrices $\M{U} \in \Complexes^{N\times N}$ and  $\M{V} \in \Complexes^{M\times M}$ and a real non-negative diagonal matrix $\M{\Sigma} \in  \Complexes^{N\times M}$ (singular values: $\sigma_i = \Sigma_{i,i}\,,\ \forall i\leq \min(M,N)$)  subject to:
+    \begin{align*}
+        \M{H} = \M{U}\,\M{\Sigma}\,\M{V}\T
+    \end{align*}
+    \vspace{-2em}\begin{itemize}
+        \item  $\M{U}$ columns are eigenvectors of $\M{H}\,\M{H}\T$,   
+        \item  $\M{V}$ columns are eigenvectors of $\M{H}\T\,\M{H}$,  
+        \item $\M{\Sigma} = \sqrt{\diag\left(\eig\left(\M{H}\,\M{H}\T\right)\right)} $,
+        \item $\Norm{\M{H}}^2_F = \sum_{i} \Abs{\sigma_i}^2 $
+        \item $\rank(\M{H})$ non zero singular values,
+        \item if $\M{H}$ is Hermitian $\M{U} = \M{V} = \M{Q}$
+    \end{itemize}
+    \end{block}
+
+    \begin{block}{Woodbury identity}
+    $\left(\M{A} + \M{U}\,\M{B}\,\M{V} \right)^{-1} = \M{A}^{-1} - \M{A}^{-1}\,\M{U}\left( \M{B}^{-1} + \M{V}\,\M{A}^{-1}\,\M{U}\right)^{-1}\,\M{V}\,\M{A}^{-1}$
+    \end{block}
+    
+    \begin{block}{Moore-Penrose pseudo inverse}
+    The pseudo inverse of $\M{H} = \M{U}\,\M{\Sigma}\,\M{V}\T$ writes  $\M{H}^+ = \M{V}\,\M{\Sigma}^+\,\M{U}\T$ with $\Sigma_{i,i}^+ = \left\{
+                            \begin{array}{ll}
+                              \Sigma^{-1}_{i,i} &   \text{if }\sigma_i\neq0 \,, \\
+                              0 & \text{otherwise} \,.
+                            \end{array}
+                                  \right.$ 
+                                  
+   \begin{itemize}
+       \item        $\M{H}\,\M{H}^+\,\M{H} = \M{H} $ and   $ \M{H}^+\,\M{H}\,\M{H}^+ = \M{H}^+ $
+         \item   $\M{H}$ is square  $\ \rank(\M{H}) = N \Rightarrow \M{H}^+ = \M{H}^{-1}$
+        \item     $\M{H}$ is broad $\ \rank(\M{H}) = N \Rightarrow \M{H}^+ = \M{H}\T \left(\M{H}\,\M{H}\T\right)^{-1}$
+           \item $\M{H}$ is  tall $\ \rank(\M{H}) = M \Rightarrow \M{H}^+ = \left(\M{H}\T\,\M{H}\right)^{-1}\,\M{H}\T $ 
+   \end{itemize}
+    \end{block}
+
+\end{column}
+
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\vspace{-1.5em}
+\begin{columns}[onlytextwidth]
+\begin{column}{0.5\textwidth - .5cm}
+    \begin{block}{Derivatives} 
+      {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+         $J_{i,j}=\left[\PDer{\V{x}}{\V{y}}\right]_{i,j} = \PDer{x_i}{y_j}  $ & Jacobian matrix\\
+        $\nabla f = \PDer{f}{\V{x}}$ &    Gradient vector\\
+        $\left[\nabla^2 f\right]_{i,j} = 
+\frac{\partial^2 f}{\partial x_i\,\partial x_j }$ &    Hessian matrix\\
+        \end{tabular*}}
+    \end{block}
+    \begin{block}{Derivation rules} 
+      {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+     %   $\partial \M{A} = 0$ \\
+        $\partial\left(\alpha\, \M{A}+ \beta \,\M{B}\right) = \alpha\,\partial\M{A} +\beta\,\partial\M{B}$ & linearity \\
+        $\partial\left( \M{A}\,\M{B}\right) =\left( \partial\M{A}\right) \, \M{B} +  \M{A}\, \left(\partial\M{B}\right)$  &  \\
+        $\partial\left( \M{A}^{-1}\right) = -\M{A}^{-1}\left( \partial\M{A}\right)\,\M{A}^{-1}$ &  \\
+        $\partial\left( \M{A}\T\right) = \left( \partial\M{A}\right)\T$ &  \\
+        $\PDer{\V{x}\T\V{y}}{\V{x}} = \PDer{\V{y}\T\V{x}}{\V{x}} = \V{x} $&\\
+        $\PDer{\V{x}\T\M{A}\V{x}}{\V{x}} = \left(\M{A} + \M{A}\T\right) \V{x} $&    \\
+   %     $\PDer{f\comp g}{x} =\left( \PDer{f}{x}\comp g \right)\, \PDer{g}{\V{x}}$ & chain rule\\
+   %     $\PDer{f\comp g(\V{x})}{\V{x}} = \sum_m^M  \PDer{f}{\left[g(\V{x})\right]_m}\, \PDer{\left[g(\V{x})\right]_m}{\V{x}}$ & chain rule\\
+        $\PDer{f\comp g(\V{x})}{\V{x}} = \At{\sum_{m=0}^{M-1}  \PDer{f}{u_m}\, \PDer{u_m}{\V{x}}}{\V{u} = g(\V{x})}$ & chain rule\\
+        $\PDer{\left(\M{A}\,\V{x}-\V{y}\right)\T\M{B}\left(\M{A}\,\V{x}-\V{y}\right)}{\M{A}} = \left(\M{B} + \M{B}\T \right)\,\left(\M{A}\,\V{x}- \V{y}\right)$&
+        \end{tabular*}}
+    \end{block}
+     
+    \begin{block}{Continuous Fourier transform}
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+    $\FT{f}(\omega) = \F{f}(\omega) = \int_{-\infty}^{+\infty} f(t) \E^{-\TwoIPi\,\omega\,t}\,\D{t}$& forward\\    
+    $f(t) = \IF{\FT{f}}(t) = \int_{-\infty}^{+\infty} f(t) \E^{\TwoIPi\,\omega\,t}\,\D{\omega}$& inverse
+        \end{tabular*}}
+        
+  %  {\bf Properties}
+    
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+    $\F{\alpha f + \beta g} = \alpha \F{f} + \beta \F{g} $ & linearity\\    
+    $\F{f(t-t_0)} =\E^{-\TwoIPi\,\omega\,t_0} \F{f} $ & shift\\    
+    $\F{\E^{\TwoIPi\,\omega_0\,t} f } = \F{f}(\omega-\omega_0) $ & modulation\\   
+    $\F{f(a\,t)} =\frac{1}{\Abs{a}} \F{f}\left(\frac{\omega}{a}\right) $ & scaling\\
+    $\F{f^*} =\F{f}^*(-\omega) $ & conjugation\\
+    $ \int_{-\infty}^{+\infty} \Abs{\F{f}(\omega)}^2\,\D{\omega} = \int_{-\infty}^{+\infty} \Abs{f(t)}^2\,\D{t} $ & Plancherel-Parseval\\
+    $\F{f}(0) = \int_{-\infty}^{+\infty} f(t)\,\D{t} $ & integration\\
+    $\F{f^{(n)}} = \left(\TwoIPi\,\omega\right)^n\,\F{f}$ & differentiation\\
+    $\F{f\ast g} =\F{f}\,\F{g}$ & convolution\\
+    $\F{f\star f} = \Abs{\F{f}}^2$ & autocorrelation
+        \end{tabular*}}
+    \end{block}
+    
+    \begin{block}{Discrete Fourier Transform}
+    {\tablinesep=1.2ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+            $ \M{F}=\begin{bmatrix}
+                1&1&1&\cdots &1\\
+                1&\omega &\omega^{2}&\cdots &\omega^{N-1}\\
+                1&\omega^{2}&\omega^{4}&\cdots &\omega^{2(N-1)}\\
+                % 1&\omega^{3}&\omega^{6}&\omega^{9}&\cdots &\omega^{3(N-1)}\\
+                \vdots &\vdots &\vdots &\ddots &\vdots \\
+                1&\omega^{N-1}&\omega^{2(N-1)}&\cdots &\omega^{(N-1)(N-1)}
+                \end{bmatrix}$ & 
+            \begin{tabular}{r} 
+                with $\omega = \E^{-\frac{-2\imath\,\pi }{N}}$ \\
+                the $N^\text{th}$ root of unity.
+            \end{tabular}
+        \end{tabular*}}
+        
+        {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+         $\M{F}^{-1} = \frac{1}{N}\,\M{F}\T\,$ & orthogonality\\
+         $\M{U} =  \frac{1}{\sqrt{N}}\,\M{F}$ & $\M{U}$ is  unitary\\
+         $\Norm{\V{x}}^2_2 =\frac{1}{N}\Norm{\M{F}\,\V{x}}_2^2$& Plancherel-Parseval\\
+         $\Norm{\V{x}}_1 \leq \Norm{\M{F}\,\V{x}}_1 \leq N\,\Norm{\V{x}}_1 $&
+        \end{tabular*}}
+    \end{block}
+    
+    \begin{block}{Circular convolution matrix $\M{H}$}
+  {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+       
+        $\M{H}=\M{F}^{-1} \,\diag(\FT{\V{h}})\,\M{F}$& diagonalization by Fourier  \\
+    $\FT{\V{h}}=\M{F}\,\V{h}\,\ $ with $h_i = H_{0,i}$
+    & eigenvalues spectrum 
+        \end{tabular*}}
+    \end{block}
+\end{column}
+
+\begin{column}{0.5\textwidth - .5cm}
+
+    \begin{block}{Continuous probability distribution}
+    $\V{x}\in \Complexes^N$ is a continuous random vector, its has a probability density function (pdf) $f_X(\V{x})$ such that, for all $\Set{A} \subseteq  \Complexes^N$:
+    \begin{align*}
+        \Pr(\V{x}\in \Set{A})=\int_{\Set{A}} f_{X}(\V{y})\, \D{\V{y}}
+    \end{align*}
+  {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+       
+        $\bar{\V{x}} = \Expect{\V{x}} = \Avg{\V{x}} = \int_{-\infty}^{+\infty} \V{y}\,f_X(\V{y})\,\D{\V{y}} $& Expectation  (mean)\\
+        $\Expect{\alpha\,\V{x} +\beta\,\V{y} + \gamma} =\alpha\,\Expect{\V{x}} +\beta\,\Expect{\V{y}} + \gamma $ & linearity\\
+        $\M{C}_{\V{x},\V{y}} = \Cov\left(\V{x},\V{y}\right) = \Expect{\V{x}\V{y}\T}  - \Expect{\V{x}}\,\Expect{\V{y}}\T$ & Cross-covariance \\
+        $\M{C}_{\V{x}}=\Cov\left(\V{x},\V{x}\right) = \Expect{\V{x}\V{x}\T} -  \Expect{\V{x}}\,\Expect{\V{x}}\T$ & Covariance
+        \end{tabular*}}
+        $\M{C}_{\V{x}}$ is an Hermitian matrix of size $N\times N$. 
+    \end{block}
+    
+    \begin{block}{Independence \& Uncorrelation}
+      {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $ \Pr(X\Given Y) =  \Pr(X)$ & Independence \\
+        $ f_{X,Y}(\V{x},\V{y}) = f_X(\V{x})\, f_Y(\V{y})$ & Independence\\
+         $\Cov\left(\alpha\,\V{x} +\beta\,\V{y} + \gamma\right) = \alpha^2\,\Cov\left(\V{x}\right) +\beta^2\,\Cov\left(\V{y} \right)$ & Independence\\
+        $ \Cov\left(\V{x},\V{y}\right) = 0 $ & Uncorrelation \\
+        \end{tabular*}}
+      {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        independence $\Rightarrow$ uncorrelation & 
+        uncorrelation $\nRightarrow$ independence  
+        \end{tabular*}}
+    \end{block}
+    
+  %  \begin{block}{Bayes rule}
+ %   \begin{align*}
+ %       \Pr(X\Given Y) =  \frac{\Pr(Y\Given X)\,\Pr(Y) }{\Pr(Y) }
+ %   \end{align*}    
+ %   \end{block}
+    
+    \begin{block}{Convexity}
+    $ f: \Complexes^N \to \Reals $ is strictly convex if and only if:
+    \begin{align*}
+        f\left(\lambda\,\V{x} + (1-\lambda)\,\V{y}) < \lambda\,f(\V{x}) + (1-\lambda)\,f(\V{y}\right)\,\ \forall\,\V{x},\V{y}, \, \lambda\in[0,1]\,.
+    \end{align*}
+    $f$ has only a global minimum $\V{x}^+=\argmin_{\V{x}}  f(\V{x})$
+    \end{block}
+    \begin{block}{Gradient descent}
+    $f:  \Complexes^N \to \Reals $ is differentiable with Lipschitz gradient $L$:
+    \begin{align*}
+        \Norm{\nabla \,\V{x} - \nabla \,\V{y}}_2 \leq L\,\Norm{\V{x} - \V{y}}_2
+    \end{align*}
+    The following sequence converges towards a minimizer of $f$ in $O(1/k)$: 
+    \begin{align*}
+        \V{x}^{(k+1)} = \V{x}^{(k)} - \gamma \nabla f(\V{x}^{(k)})  \text{ with } \gamma\in[0,1/L]
+    \end{align*} 
+    \end{block}
+    
+    \begin{block}{Newton's method}
+    $f:  \Complexes^N \to \Reals $ is twice continuously, the sequence:
+    \begin{align*}
+        \V{x}^{(k+1)} = \V{x}^{(k)} - \left(\nabla^2 f(\V{x}^{(k)})\right)^{-1}\,\nabla f(\V{x}^{(k)})  
+    \end{align*} 
+     converges towards a minimizer of $f$ in $O(1/k^2)$: 
+    \end{block}
+    
+    
+    \begin{block}{Projection}
+    $\M{P}  \in \Complexes^{N\times N}$  is a projection on a subset $\Set{S} \subseteq   \Complexes^{N}$ and its indicator $\imath_{\Set{S}}$:
+    
+      {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $\M{P} \,\V{x} = \argmin_{\V{y}} \left(\imath_{\Set{S}}(\V{y}) + \frac{1}{2}\Norm{\V{x} - \V{y}}^2\right)$ & 
+        with $\imath_{\Set{S}}(\V{x})\left\{
+                            \begin{array}{ll}
+                              0 &   \text{if } \V{x}\in\Set{S} \,, \\
+                              +\infty & \text{otherwise} \,.
+                            \end{array}
+                                  \right.$\\
+        $\M{P}\,\M{P} \,\V{x}= \M{P}\,\V{x}\,.$ & idempotent
+        \end{tabular*}}
+      {\tablinesep=1.1ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $\Norm{\M{P} \,\V{x} - \M{P} \,\V{y}}_2 \leq \Norm{\V{x} - \V{y}}_2$ &  $\Set{S}$ is convex $\Rightarrow\M{P}$ is non-expansive\\
+        \end{tabular*}}
+    \end{block}
+    
+    \begin{block}{Proximity operator}
+    $f$ is a lower semi-continuous convex function, its proximity operator is:
+    \begin{align*}
+        \prox_f(\V{y}) =   \argmin_{\V{y}} \left( f(\V{y}) + \frac{1}{2}\Norm{\V{x} - \V{y}}^2\right)
+    \end{align*}
+       $ \V{p} =  \prox_f(\V{x}) \Leftrightarrow \V{x} - \V{p} \in \partial f (\V{p})$  with $ \partial f (\V{p})$ the subdifferential of $f$\\
+        $\V{x}^+ = \prox_f(\V{x}^+)  \Leftrightarrow  \V{x}^+=\argmin_{\V{x}}  f(\V{x})$\\% are the minimizers of $f$.
+       % $\V{x}^{(k+1)} = \prox_f(\V{x}^{(k)})$  Algo du point proximal
+    \end{block}
+\end{column}
+\end{columns}
+
+\end{frame}
+\end{document}
