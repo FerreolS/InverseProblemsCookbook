@@ -190,12 +190,12 @@ a_0&0&0&\dots &0\\
         \M{H} = \M{U}\,\M{\Sigma}\,\M{V}\T
     \end{align*}
     \vspace{-2em}\begin{itemize}
-        \item  $\M{U}$ columns are eigenvectors of $\M{H}\,\M{H}\T$,   
-        \item  $\M{V}$ columns are eigenvectors of $\M{H}\T\,\M{H}$,  
+        \item  columns of $\M{U}$  are eigenvectors of $\M{H}\,\M{H}\T$,  
+        \item columns of  $\M{V}$ are eigenvectors of $\M{H}\T\,\M{H}$,  
         \item $\M{\Sigma} = \sqrt{\diag\left(\eig\left(\M{H}\,\M{H}\T\right)\right)} $,
-        \item $\Norm{\M{H}}^2_F = \sum_{i} \Abs{\sigma_i}^2 $
-        \item $\rank(\M{H})$ non zero singular values,
-        \item if $\M{H}$ is Hermitian $\M{U} = \M{V} = \M{Q}$
+        \item $\Norm{\M{H}}^2_F = \sum_{i} \sigma_i^2 $
+        \item $\rank(\M{H})$: number of non zero singular values,
+    %    \item if $\M{H}$ is Hermitian $\M{U} = \M{V} = \M{Q}$
     \end{itemize}
     \end{block}
 
@@ -213,9 +213,9 @@ a_0&0&0&\dots &0\\
                                   
    \begin{itemize}
        \item        $\M{H}\,\M{H}^+\,\M{H} = \M{H} $ and   $ \M{H}^+\,\M{H}\,\M{H}^+ = \M{H}^+ $
-         \item   $\M{H}$ is square  $\ \rank(\M{H}) = N \Rightarrow \M{H}^+ = \M{H}^{-1}$
-        \item     $\M{H}$ is broad $\ \rank(\M{H}) = N \Rightarrow \M{H}^+ = \M{H}\T \left(\M{H}\,\M{H}\T\right)^{-1}$
-           \item $\M{H}$ is  tall $\ \rank(\M{H}) = M \Rightarrow \M{H}^+ = \left(\M{H}\T\,\M{H}\right)^{-1}\,\M{H}\T $ 
+         \item   $\M{H}$ is square and   $\ \rank(\M{H}) = N \Rightarrow \M{H}^+ = \M{H}^{-1}$
+        \item     $\M{H}$ is broad: $\ \rank(\M{H}) \leq N$ and $ \M{H}^+ = \M{H}\T \left(\M{H}\,\M{H}\T\right)^{-1}$
+           \item $\M{H}$ is  tall: $\ \rank(\M{H}) \leq M $ and $\M{H}^+ = \left(\M{H}\T\,\M{H}\right)^{-1}\,\M{H}\T $ 
    \end{itemize}
     \end{block}
 
