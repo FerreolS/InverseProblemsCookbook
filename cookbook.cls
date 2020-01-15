@@ -255,9 +255,9 @@
                           {block body}
 
         \usebeamerfont{block body}
-        \vskip2ex
+        \vskip1ex
         \begin{minipage}{\textwidth-4ex}
-             \setlength{\parskip}{1.5ex}
+             \setlength{\parskip}{1.ex}
              \setlength{\abovecaptionskip}{1ex}
 }
 
@@ -265,7 +265,7 @@
 \setbeamertemplate{block end}
 {
         \end{minipage}
-    \vskip0.2ex
+    \vskip0.ex
     \end{beamercolorbox}
     \vskip1cm
 }

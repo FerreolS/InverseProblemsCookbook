@@ -1,4 +1,5 @@
-%
+%      Inverse Problem Cookbook 
+%      Freely inspired from https://www.charles-deledalle.fr/pages/files/cookbook_datascience.pdf
 %      Copyright (C) Ferréol Soulez, 2020 
 %      ferreol.soulez@univ-lyon1.fr
 %
@@ -63,8 +64,8 @@
     \begin{block}{Basic properties}
     {\tablinesep=1.2ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-        $\left(\M{H}\,\V{x}\right)_m = \sum_n H_{m,n}\,x_n$ &  vector matrix product\\
-        $\left(\M{H}\,\M{G}\right)_{m,k} = \sum_{n} H_{m,n}\,G_{n,k}$ &  matrix product\\
+        $\left[\M{H}\,\V{x}\right]_m = \sum_n H_{m,n}\,x_n$ &  vector matrix product\\
+        $\left[\M{H}\,\M{G}\right]_{m,k} = \sum_{n} H_{m,n}\,G_{n,k}$ &  matrix product\\
         $\M{H}\left(\alpha\,\V{x}+\beta\,\V{y}\right) = \alpha\,\M{H}\,\V{x}+\beta\,\M{H}\,\V{y}$ & linearity\\ 
         $\left({\V{x}}\times {\V{y}}\right)_n = x_n\,y_n$ & element wise product \\
         $\M{I}  =    
@@ -234,7 +235,7 @@ a_0&0&0&\dots &0\\
       {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
          $J_{i,j}=\left[\PDer{\V{x}}{\V{y}}\right]_{i,j} = \PDer{x_i}{y_j}  $ & Jacobian matrix\\
-        $\nabla f = \PDer{f}{\V{x}}$ &    Gradient vector\\
+        $\left[\nabla f \right]_i= \PDer{f}{x_i}$ &    Gradient vector\\
         $\left[\nabla^2 f\right]_{i,j} = 
 \frac{\partial^2 f}{\partial x_i\,\partial x_j }$ &    Hessian matrix\\
         \end{tabular*}}
@@ -260,20 +261,20 @@ a_0&0&0&\dots &0\\
     {\tablinesep=1.2ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
     $\FT{f}(\omega) = \F{f}(\omega) = \int_{-\infty}^{+\infty} f(t) \E^{-\TwoIPi\,\omega\,t}\,\D{t}$& forward\\    
-    $f(t) = \IF{\FT{f}}(t) = \int_{-\infty}^{+\infty} f(t) \E^{\TwoIPi\,\omega\,t}\,\D{\omega}$& inverse
+    $f(t) = \IF{\FT{f}}(t) = \int_{-\infty}^{+\infty} f(\omega) \E^{\TwoIPi\,\omega\,t}\,\D{\omega}$& inverse
         \end{tabular*}}
         
   %  {\bf Properties}
     
-    {\tablinesep=1.2ex
+    {\tablinesep=1.3ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
     $\F{\alpha f + \beta g} = \alpha \F{f} + \beta \F{g} $ & linearity\\    
     $\F{f(t-t_0)} =\E^{-\TwoIPi\,\omega\,t_0} \F{f} $ & shift\\    
     $\F{\E^{\TwoIPi\,\omega_0\,t} f } = \F{f}(\omega-\omega_0) $ & modulation\\   
     $\F{f(a\,t)} =\frac{1}{\Abs{a}} \F{f}\left(\frac{\omega}{a}\right) $ & scaling\\
-    $\F{f^*} =\F{f}^*(-\omega) $ & conjugation\\
-    $ \int_{-\infty}^{+\infty} \Abs{\F{f}(\omega)}^2\,\D{\omega} = \int_{-\infty}^{+\infty} \Abs{f(t)}^2\,\D{t} $ & Plancherel-Parseval\\
-    $\F{f}(0) = \int_{-\infty}^{+\infty} f(t)\,\D{t} $ & integration\\
+    $\F{f^*}(\omega) =\F{f}^*(-\omega) $ & conjugation\\
+    $ \int_{-\infty}^{+\infty} \Abs{\FT{f}(\omega)}^2\,\D{\omega} = \int_{-\infty}^{+\infty} \Abs{f(t)}^2\,\D{t} $ & Plancherel-Parseval\\
+    $\FT{f}(0) = \int_{-\infty}^{+\infty} f(t)\,\D{t} $ & integration\\
     $\F{f^{(n)}} = \left(\TwoIPi\,\omega\right)^n\,\F{f}$ & differentiation\\
     $\F{f\ast g} =\F{f}\,\F{g}$ & convolution\\
     $\F{f\star f} = \Abs{\F{f}}^2$ & autocorrelation
@@ -311,7 +312,7 @@ a_0&0&0&\dots &0\\
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
        
         $\M{H}=\M{F}^{-1} \,\diag(\FT{\V{h}})\,\M{F}$& diagonalization by Fourier  \\
-    $\FT{\V{h}}=\M{F}\,\V{h}\,\ $ with $h_i = H_{0,i}$
+    $\FT{\V{h}}=\M{F}\,\V{h}\,\ $ with $h_i = H_{0,i}$ the PSF
     & eigenvalues spectrum 
         \end{tabular*}}
     \end{block}
@@ -320,19 +321,19 @@ a_0&0&0&\dots &0\\
 \begin{column}{0.5\textwidth - .5cm}
 
     \begin{block}{Continuous probability distribution}
-    $\V{x}\in \Complexes^N$ is a continuous random vector, its has a probability density function (pdf) $f_X(\V{x})$ such that, for all $\Set{A} \subseteq  \Complexes^N$:
+    $\V{x}\in \Complexes^N$ is a continuous random vector, it has a probability density function (pdf) $f_X(\V{x})$ such that, for all $\Set{A} \subseteq  \Complexes^N$:
     \begin{align*}
-        \Pr(\V{x}\in \Set{A})=\int_{\Set{A}} f_{X}(\V{y})\, \D{\V{y}}
+        \Pr(\V{x}\in \Set{A})=\int_{\Set{A}} f_{X}(\V{x})\, \D{\V{x}}
     \end{align*}
   {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
        
-        $\bar{\V{x}} = \Expect{\V{x}} = \Avg{\V{x}} = \int_{-\infty}^{+\infty} \V{y}\,f_X(\V{y})\,\D{\V{y}} $& Expectation  (mean)\\
+        $\bar{\V{x}} = \Expect{\V{x}} = \Avg{\V{x}} = \int_{-\infty}^{+\infty} \V{x}\,f_X(\V{x})\,\D{\V{x}} $& Expectation  (mean)\\
         $\Expect{\alpha\,\V{x} +\beta\,\V{y} + \gamma} =\alpha\,\Expect{\V{x}} +\beta\,\Expect{\V{y}} + \gamma $ & linearity\\
         $\M{C}_{\V{x},\V{y}} = \Cov\left(\V{x},\V{y}\right) = \Expect{\V{x}\V{y}\T}  - \Expect{\V{x}}\,\Expect{\V{y}}\T$ & Cross-covariance \\
-        $\M{C}_{\V{x}}=\Cov\left(\V{x},\V{x}\right) = \Expect{\V{x}\V{x}\T} -  \Expect{\V{x}}\,\Expect{\V{x}}\T$ & Covariance
-        \end{tabular*}}
+        $\M{C}_{\V{x}}=\Cov\left(\V{x},\V{x}\right) = \Expect{\V{x}\V{x}\T} -  \Expect{\V{x}}\,\Expect{\V{x}}\T$ & Covariance\\
         $\M{C}_{\V{x}}$ is an Hermitian matrix of size $N\times N$. 
+        \end{tabular*}}
     \end{block}
     
     \begin{block}{Independence \& Uncorrelation}
@@ -346,8 +347,9 @@ a_0&0&0&\dots &0\\
       {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
         independence $\Rightarrow$ uncorrelation & 
-        uncorrelation $\nRightarrow$ independence  
-        \end{tabular*}}
+        uncorrelation $\nRightarrow$ independence  \\
+        $  \Pr(X\Given Y) =  \frac{\Pr(Y\Given X)\,\Pr(Y) }{\Pr(Y) }$& Bayes rule
+        \end{tabular*}}\vspace{-1ex}
     \end{block}
     
   %  \begin{block}{Bayes rule}
@@ -359,23 +361,24 @@ a_0&0&0&\dots &0\\
     \begin{block}{Convexity}
     $ f: \Complexes^N \to \Reals $ is strictly convex if and only if:
     \begin{align*}
-        f\left(\lambda\,\V{x} + (1-\lambda)\,\V{y}) < \lambda\,f(\V{x}) + (1-\lambda)\,f(\V{y}\right)\,\ \forall\,\V{x},\V{y}, \, \lambda\in[0,1]\,.
+        f\left(\lambda\,\V{x} + (1-\lambda)\,\V{y}) < \lambda\,f(\V{x}) + (1-\lambda)\,f(\V{y}\right)\,\ \forall\,\V{x},\V{y}, \, \lambda\in ]0,1[\,.
     \end{align*}
-    $f$ has only a global minimum $\V{x}^+=\argmin_{\V{x}}  f(\V{x})$
+    $f$ has only a global minimum $\V{x}^+=\argmin_{\V{x}}  f(\V{x})$\vspace{-1ex}
     \end{block}
+    
     \begin{block}{Gradient descent}
-    $f:  \Complexes^N \to \Reals $ is differentiable with Lipschitz gradient $L$:
+    $f:  \Complexes^N \to \Reals $ is convex and differentiable with Lipschitz gradient $L$:
     \begin{align*}
         \Norm{\nabla \,\V{x} - \nabla \,\V{y}}_2 \leq L\,\Norm{\V{x} - \V{y}}_2
     \end{align*}
     The following sequence converges towards a minimizer of $f$ in $O(1/k)$: 
     \begin{align*}
-        \V{x}^{(k+1)} = \V{x}^{(k)} - \gamma \nabla f(\V{x}^{(k)})  \text{ with } \gamma\in[0,1/L]
+        \V{x}^{(k+1)} = \V{x}^{(k)} - \gamma \nabla f(\V{x}^{(k)})  \text{ with } \gamma\in]0,1/L]
     \end{align*} 
     \end{block}
     
     \begin{block}{Newton's method}
-    $f:  \Complexes^N \to \Reals $ is twice continuously, the sequence:
+    $f:  \Complexes^N \to \Reals $ is convex and twice  differentiable, the sequence:
     \begin{align*}
         \V{x}^{(k+1)} = \V{x}^{(k)} - \left(\nabla^2 f(\V{x}^{(k)})\right)^{-1}\,\nabla f(\V{x}^{(k)})  
     \end{align*} 
@@ -395,21 +398,22 @@ a_0&0&0&\dots &0\\
                               +\infty & \text{otherwise} \,.
                             \end{array}
                                   \right.$\\
-        $\M{P}\,\M{P} \,\V{x}= \M{P}\,\V{x}\,.$ & idempotent
+        $\M{P}\,\M{P} = \M{P}\,.$ & idempotent
         \end{tabular*}}
       {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
         $\Norm{\M{P} \,\V{x} - \M{P} \,\V{y}}_2 \leq \Norm{\V{x} - \V{y}}_2$ &  $\Set{S}$ is convex $\Rightarrow\M{P}$ is non-expansive\\
+        $ \V{x}^{(k+1)} = \M{P}\left(\V{x}^{(k)} - \gamma \nabla f(\V{x}^{(k)}) \right)$ & projected gradient descent
         \end{tabular*}}
     \end{block}
     
     \begin{block}{Proximity operator}
-    $f$ is a lower semi-continuous convex function, its proximity operator is:
+    $f$: a lower semi-continuous convex function, its proximity operator is:
     \begin{align*}
         \prox_f(\V{y}) =   \argmin_{\V{y}} \left( f(\V{y}) + \frac{1}{2}\Norm{\V{x} - \V{y}}^2\right)
     \end{align*}
        $ \V{p} =  \prox_f(\V{x}) \Leftrightarrow \V{x} - \V{p} \in \partial f (\V{p})$  with $ \partial f (\V{p})$ the subdifferential of $f$\\
-        $\V{x}^+ = \prox_f(\V{x}^+)  \Leftrightarrow  \V{x}^+=\argmin_{\V{x}}  f(\V{x})$\\% are the minimizers of $f$.
+        $\V{x}^+ = \prox_f(\V{x}^+)  \Leftrightarrow  \V{x}^+=\argmin_{\V{x}} f(\V{x})$% are the minimizers of $f$.
        % $\V{x}^{(k+1)} = \prox_f(\V{x}^{(k)})$  Algo du point proximal
     \end{block}
 \end{column}
