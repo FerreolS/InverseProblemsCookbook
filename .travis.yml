@@ -13,7 +13,7 @@ script:
   - pdf2svg IPCookbook.pdf IPCookbook%d.svg all
   
 after_success:
-  - git clone https://github.com/ferreolS/InverseProblemsCookbook pdf
+  - git clone https://github.com/FerreolS/InverseProblemsCookbook pdf
   - cd pdf
   - git symbolic-ref HEAD refs/heads/gh-pages  # auto-switches branches to gh-pages
   - rm .git/index
@@ -21,5 +21,5 @@ after_success:
   - mv ../*{.svg,.pdf} .
   - git add *
   - git commit -a -m "Add Doc"
-  - git push --force  https://${GH_TOKEN}@github.com/ferreolS/InverseProblemsCookbook gh-pages
+  - git push --force  https://${GH_TOKEN}@github.com/FerreolS/InverseProblemsCookbook gh-pages
   
