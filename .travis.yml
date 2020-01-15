@@ -4,11 +4,13 @@ services: docker
 before_script:
 - git config --global user.email "ferreol.soulez@univ-lyon1.fr"
 - git config --global user.name "ferreolS"
+- sudo apt-get -y install pdf2svg
 
 script:
   # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
   # Compiling only main.tex:
   - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic IPCookbook.tex"
+  - pdf2svg IPCookbook.pdf IPCookbook%d.svg all
   
 after_success:
   - git clone https://github.com/ferreolS/InverseProblemsCookbook pdf
@@ -16,7 +18,7 @@ after_success:
   - git symbolic-ref HEAD refs/heads/gh-pages  # auto-switches branches to gh-pages
   - rm .git/index
   - git clean -fdx
-  - mv ../IPCookbook.pdf .
+  - mv ../*{.svg,.pdf} .
   - git add *
   - git commit -a -m "Add Doc"
   - git push --force  https://${GH_TOKEN}@github.com/ferreolS/InverseProblemsCookbook gh-pages
