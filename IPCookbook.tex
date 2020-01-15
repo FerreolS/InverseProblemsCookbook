@@ -253,7 +253,7 @@ a_0&0&0&\dots &0\\
    %     $\PDer{f\comp g}{x} =\left( \PDer{f}{x}\comp g \right)\, \PDer{g}{\V{x}}$ & chain rule\\
    %     $\PDer{f\comp g(\V{x})}{\V{x}} = \sum_m^M  \PDer{f}{\left[g(\V{x})\right]_m}\, \PDer{\left[g(\V{x})\right]_m}{\V{x}}$ & chain rule\\
         $\PDer{f\comp g(\V{x})}{\V{x}} = \At{\sum_{m=0}^{M-1}  \PDer{f}{u_m}\, \PDer{u_m}{\V{x}}}{\V{u} = g(\V{x})}$ & chain rule\\
-        $\PDer{\left(\M{A}\,\V{x}-\V{y}\right)\T\M{B}\left(\M{A}\,\V{x}-\V{y}\right)}{\M{A}} = \left(\M{B} + \M{B}\T \right)\,\left(\M{A}\,\V{x}- \V{y}\right)$&
+        $\PDer{\left(\M{A}\,\V{x}-\V{y}\right)\T\M{B}\left(\M{A}\,\V{x}-\V{y}\right)}{\M{A}} = \left(\M{B} + \M{B}\T \right)\,\left(\M{A}\,\V{x}- \V{y}\right)\,\V{x}\T$&
         \end{tabular*}}
     \end{block}
      
