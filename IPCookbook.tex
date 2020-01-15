@@ -237,7 +237,7 @@ a_0&0&0&\dots &0\\
          $J_{i,j}=\left[\PDer{\V{x}}{\V{y}}\right]_{i,j} = \PDer{x_i}{y_j}  $ & Jacobian matrix\\
         $\left[\nabla f \right]_i= \PDer{f}{x_i}$ &    Gradient vector\\
         $\left[\nabla^2 f\right]_{i,j} = 
-\frac{\partial^2 f}{\partial x_i\,\partial x_j }$ &    Hessian matrix\\
+\frac{\partial^2 f}{\partial x_i\,\partial x_j }$ &    Hessian matrix
         \end{tabular*}}
     \end{block}
     \begin{block}{Derivation rules} 
@@ -310,10 +310,9 @@ a_0&0&0&\dots &0\\
     \begin{block}{Circular convolution matrix $\M{H}$}
   {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-       
+        $ H_{0,i} = h_i $ & impulse response (PSF)\\
         $\M{H}=\M{F}^{-1} \,\diag(\FT{\V{h}})\,\M{F}$& diagonalization by Fourier  \\
-    $\FT{\V{h}}=\M{F}\,\V{h}\,\ $ with $h_i = H_{0,i}$ the PSF
-    & eigenvalues spectrum 
+    $\FT{\V{h}}=\M{F}\,\V{h}\,\ $     & eigenvalues spectrum 
         \end{tabular*}}
     \end{block}
 \end{column}
@@ -363,7 +362,13 @@ a_0&0&0&\dots &0\\
     \begin{align*}
         f\left(\lambda\,\V{x} + (1-\lambda)\,\V{y}) < \lambda\,f(\V{x}) + (1-\lambda)\,f(\V{y}\right)\,\ \forall\,\V{x},\V{y}, \, \lambda\in ]0,1[\,.
     \end{align*}
-    $f$ has only a global minimum $\V{x}^+=\argmin_{\V{x}}  f(\V{x})$\vspace{-1ex}
+%    $f$ has only a global minimum $\V{x}^+=\argmin_{\V{x}}  f(\V{x})$
+%
+      {\tablinesep=1.ex
+        \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
+        $\V{x}^+=\argmin_{\V{x}}  f(\V{x})$& global minimum\\
+ $ \V{p}\in\partial f(\V{x}) \Leftrightarrow f(\V{x})-f(\V{x}') \geq\Inner{\V{p}}{\V{x}-\V{x}'}\,, \forall\V{x}'$  & subgradient
+        \end{tabular*}}\vspace{-1ex}
     \end{block}
     
     \begin{block}{Gradient descent}
@@ -371,7 +376,7 @@ a_0&0&0&\dots &0\\
     \begin{align*}
         \Norm{\nabla \,\V{x} - \nabla \,\V{y}}_2 \leq L\,\Norm{\V{x} - \V{y}}_2
     \end{align*}
-    The following sequence converges towards a minimizer of $f$ in $O(1/k)$: 
+    The following sequence converges toward a minimizer of $f$ in $O(1/k)$: 
     \begin{align*}
         \V{x}^{(k+1)} = \V{x}^{(k)} - \gamma \nabla f(\V{x}^{(k)})  \text{ with } \gamma\in]0,1/L]
     \end{align*} 
@@ -382,7 +387,7 @@ a_0&0&0&\dots &0\\
     \begin{align*}
         \V{x}^{(k+1)} = \V{x}^{(k)} - \left(\nabla^2 f(\V{x}^{(k)})\right)^{-1}\,\nabla f(\V{x}^{(k)})  
     \end{align*} 
-     converges towards a minimizer of $f$ in $O(1/k^2)$: 
+     converges toward a minimizer of $f$ in $O(1/k^2)$: 
     \end{block}
     
     
@@ -412,10 +417,10 @@ a_0&0&0&\dots &0\\
     \begin{align*}
         \prox_f(\V{y}) =   \argmin_{\V{y}} \left( f(\V{y}) + \frac{1}{2}\Norm{\V{x} - \V{y}}^2\right)
     \end{align*}
-       $ \V{p} =  \prox_f(\V{x}) \Leftrightarrow \V{x} - \V{p} \in \partial f (\V{p})$  with $ \partial f (\V{p})$ the subdifferential of $f$\\
+       $ \V{p} =  \prox_f(\V{x}) \Leftrightarrow \V{x} - \V{p} \in \partial f (\V{p})$  with $ \partial f (\V{p})$ the subgradient of $f$\\
         $\V{x}^+ = \prox_f(\V{x}^+)  \Leftrightarrow  \V{x}^+=\argmin_{\V{x}} f(\V{x})$% are the minimizers of $f$.
        % $\V{x}^{(k+1)} = \prox_f(\V{x}^{(k)})$  Algo du point proximal
-    \end{block}
+    \end{block}\vspace{-1ex}
 \end{column}
 \end{columns}
 
