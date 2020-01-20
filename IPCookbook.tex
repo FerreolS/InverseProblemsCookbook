@@ -262,24 +262,22 @@ a_0&0&0&\dots &0\\
     \begin{block}{Continuous Fourier transform}
     {\tablinesep=1.2ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-    $\FT{f}(\omega) = \F{f}(\omega) = \int_{-\infty}^{+\infty} f(t) \E^{-\TwoIPi\,\omega\,t}\,\D{t}$& forward\\    
-    $f(t) = \IF{\FT{f}}(t) = \int_{-\infty}^{+\infty} f(\omega) \E^{\TwoIPi\,\omega\,t}\,\D{\omega}$& inverse
+    $\FT{f}(\nu) = \F{f}(\nu) = \int_{-\infty}^{+\infty} f(t) \E^{-\TwoIPi\,\nu\,t}\,\D{t}$& forward\\    
+    $f(t) = \IF{\FT{f}}(t) = \int_{-\infty}^{+\infty} f(\nu) \E^{\TwoIPi\,\nu\,t}\,\D{\nu}$& inverse
         \end{tabular*}}
-        
   %  {\bf Properties}
-    
     {\tablinesep=1.3ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
-    $\F{\alpha f + \beta g} = \alpha \F{f} + \beta \F{g} $ & linearity\\    
-    $\F{f(t-t_0)} =\E^{-\TwoIPi\,\omega\,t_0} \F{f} $ & shift\\    
-    $\F{\E^{\TwoIPi\,\omega_0\,t} f } = \F{f}(\omega-\omega_0) $ & modulation\\   
-    $\F{f(a\,t)} =\frac{1}{\Abs{a}} \F{f}\left(\frac{\omega}{a}\right) $ & scaling\\
-    $\F{f^*}(\omega) =\F{f}^*(-\omega) $ & conjugation\\
-    $ \int_{-\infty}^{+\infty} \Abs{\FT{f}(\omega)}^2\,\D{\omega} = \int_{-\infty}^{+\infty} \Abs{f(t)}^2\,\D{t} $ & Plancherel-Parseval\\
+    $\F{\alpha f + \beta g} = \alpha \FT{f} + \beta \FT{g} $ & linearity\\    
+    $\F{f(t-t_0)} =\E^{-\TwoIPi\,\nu\,t_0} \FT{f}(\nu) $ & shift\\    
+    $\F{\E^{\TwoIPi\,\nu_0\,t} f(t) } = \FT{f}(\nu-\nu_0) $ & modulation\\   
+    $\F{f(a\,t)} =\frac{1}{\Abs{a}} \FT{f}\left(\frac{\nu}{a}\right) $ & scaling\\
+    $\F{f^*}(\nu) =\FT{f}^*(-\nu) $ & conjugation\\
+    $ \int_{-\infty}^{+\infty} \Abs{\FT{f}(\nu)}^2\,\D{\nu} = \int_{-\infty}^{+\infty} \Abs{f(t)}^2\,\D{t} $ & Plancherel-Parseval\\
     $\FT{f}(0) = \int_{-\infty}^{+\infty} f(t)\,\D{t} $ & integration\\
-    $\F{f^{(n)}} = \left(\TwoIPi\,\omega\right)^n\,\F{f}$ & differentiation\\
-    $\F{f\ast g} =\F{f}\,\F{g}$ & convolution\\
-    $\F{f\star f} = \Abs{\F{f}}^2$ & autocorrelation
+    $\F{f^{(n)}} = \left(\TwoIPi\,\nu\right)^n\,\FT{f}(\nu)$ & differentiation\\
+    $\F{f\ast g} =\FT{f}\,\FT{g}$ & convolution\\
+    $\F{f\star f} = \Abs{\FT{f}}^2$ & autocorrelation
         \end{tabular*}}
     \end{block}
     
@@ -298,8 +296,7 @@ a_0&0&0&\dots &0\\
                 with $\omega = \E^{-\frac{-2\imath\,\pi }{N}}$ \\
                 the $N^\text{th}$ root of unity.
             \end{tabular}
-        \end{tabular*}}
-        
+        \end{tabular*}}    
         {\tablinesep=1.1ex
         \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}l r }
          $\M{F}^{-1} = \frac{1}{N}\,\M{F}\T\,$ & orthogonality\\
