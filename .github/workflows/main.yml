@@ -31,7 +31,7 @@ jobs:
       - run: pdf2svg IPCookbook.pdf IPCookbook%d.svg all
       - run: mkdir pdf
       - run: mv *{.svg,.pdf} pdf/.
-      - uses: peaceiris/actions-gh-pages@v3
+      - uses: peaceiris/actions-gh-pages@v4
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
