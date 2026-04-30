@@ -26,7 +26,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v6
-      - uses: xu-cheng/latex-action@v2
+      - uses: xu-cheng/latex-action@v4
         with:
           root_file: IPCookbook.tex
       - run: sudo apt-get -y install pdf2svg
